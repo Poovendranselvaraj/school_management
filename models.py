@@ -136,16 +136,17 @@ class StudentGuardian(Base):
 class Classroom(Base):
     __tablename__ = 'classroom'
     id = Column(Integer, primary_key=True)
-    room_type = Column(Integer, ForeignKey('classroom_types.id'), nullable=False)
+    room_type_id = Column(Integer, ForeignKey('classroom_types.id'), nullable=False)
     room_name = Column(String, nullable=False)
     capacity = Column(Integer, nullable=False)
     classes = relationship("Class", back_populates="classroom")
+    room_type_rel = relationship("ClassroomTypes", back_populates="classrooms")
 
 class ClassroomTypes(Base):
     __tablename__ = 'classroom_types'
     id = Column(Integer, primary_key=True)
     name = Column(String, nullable=False)
-    classrooms = relationship("Classroom", back_populates="room_type")
+    classrooms = relationship("Classroom", back_populates="room_type_rel")
 
 class Period(Base):
     __tablename__ = 'period'
